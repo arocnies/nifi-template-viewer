@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <style>
+        :root {
+            --text-primary-color: #262626;
+            --text-secondary-color: #728e9b;
+
+            --primary-color: #b8c6cd;
+            --secondary-color: rgb(227, 232, 235);
+            --secondary-color-rgb: 227, 232, 235;
+
+            --table-light-color: #ffffff;
+            --table-dark-color: #f4f6f7;
+
+            --node-background-color: #ffff;
+            --label-background-color: rgb(255, 247, 215);
+
+            --connection-startpoint-color: #f00;
+            --connection-midpoint-color: #fc0;
+            --connection-endpoint-color: #00f;
+        }
+
+        .diagram-pan {
+            display: block;
+            font-family: Roboto, sans-serif;
+            color: var(--text-primary-color);
+            background-color: var(--node-background-color);
+            background-size: 14px 14px;
+            background-image: linear-gradient(to right, rgba(229, 235, 237, 1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(229, 235, 237, 1) 1px, transparent 1px)
+        }
+
+        .nifi-node {
+            text-align: center;
+            cursor: auto;
+            background-color: var(--secondary-color);
+            /*box-shadow: 0 0 20pt var(--text-primary-color);*/
+            border: solid;
+            border-radius: 2pt;
+            overflow: hidden;
+        }
+
+        .nifi-node:hover {
+            /*transition: .1s;*/
+            box-shadow: 0 0 3pt 2pt var(--text-primary-color);
+        }
+
+        .nifi-node:focus {
+            box-shadow: 0 0 3pt 2pt var(--connection-endpoint-color);
+        }
+
+        /* --- Processor */
+        .nifi-name {
+            padding: 10px;
+            font-size: 24px;
+        }
+
+        .nifi-processor-type:hover {
+            cursor: pointer;
+        }
+
+        .nifi-processGroup .nifi-name {
+            background-color: var(--primary-color);
+        }
+
+        .nifi-processor-type {
+            text-align: center;
+            font-size: 16px;
+        }
+
+        /* --- Bend */
+        .nifi-bend {
+            background-color: var(--connection-midpoint-color);
+        }
+
+        /* --- Funnel */
+        .nifi-funnel {
+            line-height: 43px;
+        }
+
+        /* --- Port */
+        .nifi-outputPort, .nifi-inputPort {
+            background-color: var(--primary-color);
+        }
+
+        /* --- Label */
+        .nifi-label {
+            background-color: var(--label-background-color);
+            border-radius: 0px;
+            border: solid;
+            text-align: left;
+        }
+
+        .nifi-relationship {
+            z-index: 6;
+            background-color: #ffcc00;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 3px;
+            border-radius: 3px;
+        }
+
+        /* --- Table */
+        .nifi-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .nifi-table tr.nifi-table-header td {
+            background-color: var(--text-secondary-color) !important;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+        }
+        .nifi-table tr.nifi-table-header {
+            outline: none !important;
+        }
+        .nifi-table-header tr {
+            border-collapse: collapse;
+        }
+        .nifi-table tr {
+            font-size: 14px;
+            height: 24px;
+            width: 100%;
+            overflow: auto;
+        }
+        .nifi-table tr:hover {
+            outline: 2px solid black;
+        }
+        .nifi-table tr:hover td {
+            background-color: var(--connection-midpoint-color);
+        }
+        .nifi-table tr:nth-child(even){
+            background-color: white;
+        }
+        .nifi-table tr:nth-child(odd){
+            background-color: #f4f6f7;
+        }
+        .nifi-table tr td:first-child {
+            font-weight: bold;
+        }
+        .nifi-table tr td {
+            padding: 2px 2px 5px 5px;
+        }
+
+        /* --- Details */
+        .nifi-details-pane {
+            font-family: Roboto, sans-serif;
+            color: var(--text-primary-color);
+        }
+        .details-header {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: lighter;
+            width: 100%;
+            background-color: var(--text-secondary-color);
+            color: white;
+        }
+        .details-header .nifi-processor-type {
+            padding: 10px;
+            font-size: 18px;
+        }
+        .nifi-details-pane {
+            background-color: white;
+        }
+
+        /* --- Tabs */
+        .details-body {
+            padding: 10px;
+        }
+        .details-body .tab-pane {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            align-items: center;
+            padding: 0;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .details-body .tab-pane .tab {
+            flex: 1;
+            background-color: var(--primary-color);
+            border-width: 0;
+            border-top: 2px solid var(--primary-color);
+            border-bottom: 2px solid var(--text-primary-color);
+            border-left: 2px solid var(--primary-color);
+            border-right: 2px solid var(--primary-color);
+        }
+        .details-body .tab-pane .tab.selected-tab button {
+            background-color: white;
+        }
+        .details-body .tab-pane .tab.selected-tab {
+            border-top: 2px solid var(--text-primary-color);
+            border-bottom: 0;
+            border-left: 2px solid var(--text-primary-color);
+            border-right: 2px solid var(--text-primary-color);
+        }
+        .details-body .tab-pane .tab + .tab {
+            border-left: 0;
+        }
+        .details-body .tab-pane .tab ~ .tab.selected-tab {
+            /*border-right: 0;*/
+        }
+        .details-body .tab-pane .tab + .tab.selected-tab {
+            border-left: 2px solid var(--text-primary-color);
+        }
+        .details-body .tab-pane button {
+            width: 100%;
+            line-height: 32px;
+            text-transform: uppercase;
+            color: var(--text-secondary-color);
+            background-color: var(--secondary-color);
+            font-weight: bolder;
+            font-size: 12px;
+            border-radius: 0;
+            border: none
+        }
+
+        /* --- Breadcrumb */
+        .nifi-breadcrumb {
+            background: rgba(var(--secondary-color-rgb), 0.8);
+            display: flex;
+            font-family: Roboto, sans-serif;
+            color: var(--text-secondary-color);
+            align-content: center;
+            border-top: 2px solid;
+            border-left: none;
+            border-right: none;
+        }
+        .nifi-breadcrumb a,p {
+            padding: 10px;
+            margin: 0;
+        }
+    </style>
+</header>
+<body style="background: lightsalmon">
+<h1>Diagram Test</h1>
+<div style="display: flex">
+    <label>
+        File Path:
+        <input id="fileInput" type="text" value="test-template4.xml">
+    </label>
+    <button id="loadDiagram">Load</button>
+    <button id="renderNifi">NiFi</button>
+</div>
+<div id="app" style="width: 900px; height: 600px; border: solid black 2px;"></div>
+<div style="border: solid; width: 900px; height: 100px; padding: 10px">
+    <div id="breadcrumb" class="nifi-breadcrumb"></div>
+</div>
+<div id="detail" style="padding: 10px; width: 600px; height: 400px; border: solid black 2px;">
+    <div class="nifi-details-pane">
+        <div class="details-header">
+            <div class="nifi-name">NAME</div>
+            <div>|</div>
+            <a class="nifi-processor-type">TYPE</a>
+        </div>
+        <div class="details-body" style="">
+            <ul class="tab-pane">
+                <li class="tab" data-tab="settings">
+                    <button>Settings</button>
+                </li>
+                <li class="tab selected-tab" data-tab="properties">
+                    <button>Properties</button>
+                </li>
+                <li class="tab" data-tab="relationships">
+                    <button>Relationships</button>
+                </li>
+                <li class="tab" data-tab="comments">
+                    <button>Comments</button>
+                </li>
+            </ul>
+            <div class="tab-contents">
+                <div class="tab-content" style="display: none" data-tab="settings">
+                    <table class="nifi-table">
+                        <tr class="nifi-table-header">
+                            <td>Setting</td>
+                            <td>Value</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-content active" data-tab="properties">
+                    <table class="nifi-table">
+                        <tr class="nifi-table-header">
+                            <td>Property</td>
+                            <td>Value</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-content" style="display: none" data-tab="relationships">
+                    <table class="nifi-table">
+                        <tr class="nifi-table-header">
+                            <td>Name</td>
+                            <td>Auto Terminate</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-content" style="display: none" data-tab="comments">
+                    comments
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,966 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template encoding-version="1.2">
+    <description></description>
+    <groupId>05769905-0161-1000-b0df-7e11986ec942</groupId>
+    <name>JoinCSVRecords</name>
+    <snippet>
+        <processGroups>
+            <id>f5934ad0-2f5f-3584-0000-000000000000</id>
+            <parentGroupId>93eb3723-300f-3423-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>0.0</y>
+            </position>
+            <comments></comments>
+            <contents>
+                <connections>
+                    <id>8f18364e-18a5-3c55-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>f5934ad0-2f5f-3584-0000-000000000000</groupId>
+                        <id>0b5a9430-aa0a-3ab4-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <name></name>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>f5934ad0-2f5f-3584-0000-000000000000</groupId>
+                        <id>03457e3c-babd-3723-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>a63800c7-df8c-36be-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <bends>
+                        <x>4334.501286762687</x>
+                        <y>1038.7767788695335</y>
+                    </bends>
+                    <destination>
+                        <groupId>f5934ad0-2f5f-3584-0000-000000000000</groupId>
+                        <id>812cc0bc-0e97-30d2-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <name></name>
+                    <selectedRelationships>failure</selectedRelationships>
+                    <source>
+                        <groupId>f5934ad0-2f5f-3584-0000-000000000000</groupId>
+                        <id>b63d1681-49a5-39f3-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>314c2521-f328-3ce1-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>f5934ad0-2f5f-3584-0000-000000000000</groupId>
+                        <id>b63d1681-49a5-39f3-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <name></name>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>f5934ad0-2f5f-3584-0000-000000000000</groupId>
+                        <id>0b5a9430-aa0a-3ab4-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>714b6db8-5b90-3340-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>f5934ad0-2f5f-3584-0000-000000000000</groupId>
+                        <id>812cc0bc-0e97-30d2-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <name></name>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>f5934ad0-2f5f-3584-0000-000000000000</groupId>
+                        <id>b63d1681-49a5-39f3-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <controllerServices>
+                    <id>c2beb9c0-9b7a-3d97-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <bundle>
+                        <artifact>nifi-record-serialization-services-nar</artifact>
+                        <group>org.apache.nifi</group>
+                        <version>1.6.0-SNAPSHOT</version>
+                    </bundle>
+                    <comments></comments>
+                    <descriptors>
+                        <entry>
+                            <key>schema-access-strategy</key>
+                            <value>
+                                <name>schema-access-strategy</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>schema-registry</key>
+                            <value>
+                                <identifiesControllerService>org.apache.nifi.schemaregistry.services.SchemaRegistry</identifiesControllerService>
+                                <name>schema-registry</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>schema-name</key>
+                            <value>
+                                <name>schema-name</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>schema-text</key>
+                            <value>
+                                <name>schema-text</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>csv-reader-csv-parser</key>
+                            <value>
+                                <name>csv-reader-csv-parser</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Date Format</key>
+                            <value>
+                                <name>Date Format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Time Format</key>
+                            <value>
+                                <name>Time Format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Timestamp Format</key>
+                            <value>
+                                <name>Timestamp Format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>CSV Format</key>
+                            <value>
+                                <name>CSV Format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Value Separator</key>
+                            <value>
+                                <name>Value Separator</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Skip Header Line</key>
+                            <value>
+                                <name>Skip Header Line</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>ignore-csv-header</key>
+                            <value>
+                                <name>ignore-csv-header</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Quote Character</key>
+                            <value>
+                                <name>Quote Character</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Escape Character</key>
+                            <value>
+                                <name>Escape Character</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Comment Marker</key>
+                            <value>
+                                <name>Comment Marker</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Null String</key>
+                            <value>
+                                <name>Null String</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Trim Fields</key>
+                            <value>
+                                <name>Trim Fields</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>csvutils-character-set</key>
+                            <value>
+                                <name>csvutils-character-set</name>
+                            </value>
+                        </entry>
+                    </descriptors>
+                    <name>CSVReader</name>
+                    <persistsState>false</persistsState>
+                    <properties>
+                        <entry>
+                            <key>schema-access-strategy</key>
+                        </entry>
+                        <entry>
+                            <key>schema-registry</key>
+                        </entry>
+                        <entry>
+                            <key>schema-name</key>
+                        </entry>
+                        <entry>
+                            <key>schema-text</key>
+                        </entry>
+                        <entry>
+                            <key>csv-reader-csv-parser</key>
+                        </entry>
+                        <entry>
+                            <key>Date Format</key>
+                        </entry>
+                        <entry>
+                            <key>Time Format</key>
+                        </entry>
+                        <entry>
+                            <key>Timestamp Format</key>
+                        </entry>
+                        <entry>
+                            <key>CSV Format</key>
+                        </entry>
+                        <entry>
+                            <key>Value Separator</key>
+                        </entry>
+                        <entry>
+                            <key>Skip Header Line</key>
+                            <value>true</value>
+                        </entry>
+                        <entry>
+                            <key>ignore-csv-header</key>
+                            <value>true</value>
+                        </entry>
+                        <entry>
+                            <key>Quote Character</key>
+                        </entry>
+                        <entry>
+                            <key>Escape Character</key>
+                        </entry>
+                        <entry>
+                            <key>Comment Marker</key>
+                        </entry>
+                        <entry>
+                            <key>Null String</key>
+                        </entry>
+                        <entry>
+                            <key>Trim Fields</key>
+                        </entry>
+                        <entry>
+                            <key>csvutils-character-set</key>
+                        </entry>
+                    </properties>
+                    <state>ENABLED</state>
+                    <type>org.apache.nifi.csv.CSVReader</type>
+                </controllerServices>
+                <controllerServices>
+                    <id>d273639d-040c-3301-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <bundle>
+                        <artifact>nifi-record-serialization-services-nar</artifact>
+                        <group>org.apache.nifi</group>
+                        <version>1.6.0-SNAPSHOT</version>
+                    </bundle>
+                    <comments></comments>
+                    <descriptors>
+                        <entry>
+                            <key>Schema Write Strategy</key>
+                            <value>
+                                <name>Schema Write Strategy</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>schema-access-strategy</key>
+                            <value>
+                                <name>schema-access-strategy</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>schema-registry</key>
+                            <value>
+                                <identifiesControllerService>org.apache.nifi.schemaregistry.services.SchemaRegistry</identifiesControllerService>
+                                <name>schema-registry</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>schema-name</key>
+                            <value>
+                                <name>schema-name</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>schema-text</key>
+                            <value>
+                                <name>schema-text</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Date Format</key>
+                            <value>
+                                <name>Date Format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Time Format</key>
+                            <value>
+                                <name>Time Format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Timestamp Format</key>
+                            <value>
+                                <name>Timestamp Format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>CSV Format</key>
+                            <value>
+                                <name>CSV Format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Value Separator</key>
+                            <value>
+                                <name>Value Separator</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Include Header Line</key>
+                            <value>
+                                <name>Include Header Line</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Quote Character</key>
+                            <value>
+                                <name>Quote Character</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Escape Character</key>
+                            <value>
+                                <name>Escape Character</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Comment Marker</key>
+                            <value>
+                                <name>Comment Marker</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Null String</key>
+                            <value>
+                                <name>Null String</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Trim Fields</key>
+                            <value>
+                                <name>Trim Fields</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Quote Mode</key>
+                            <value>
+                                <name>Quote Mode</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Record Separator</key>
+                            <value>
+                                <name>Record Separator</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Include Trailing Delimiter</key>
+                            <value>
+                                <name>Include Trailing Delimiter</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>csvutils-character-set</key>
+                            <value>
+                                <name>csvutils-character-set</name>
+                            </value>
+                        </entry>
+                    </descriptors>
+                    <name>CSVRecordSetWriter</name>
+                    <persistsState>false</persistsState>
+                    <properties>
+                        <entry>
+                            <key>Schema Write Strategy</key>
+                            <value>no-schema</value>
+                        </entry>
+                        <entry>
+                            <key>schema-access-strategy</key>
+                            <value>schema-text-property</value>
+                        </entry>
+                        <entry>
+                            <key>schema-registry</key>
+                        </entry>
+                        <entry>
+                            <key>schema-name</key>
+                        </entry>
+                        <entry>
+                            <key>schema-text</key>
+                            <value>{
+                                "type": "record",
+                                "namespace": "com.example",
+                                "name": "JoinedEmp",
+                                "fields": [
+                                { "name": "Emp_Id", "type": "string" },
+                                { "name": "Name", "type": "string" },
+                                { "name": "Address", "type": "string" },
+                                { "name": "Mobile_No", "type": "string" },
+                                { "name": "Salary", "type": "string" },
+                                { "name": "Department", "type": "string" }
+                                ]
+                                } </value>
+                        </entry>
+                        <entry>
+                            <key>Date Format</key>
+                        </entry>
+                        <entry>
+                            <key>Time Format</key>
+                        </entry>
+                        <entry>
+                            <key>Timestamp Format</key>
+                        </entry>
+                        <entry>
+                            <key>CSV Format</key>
+                        </entry>
+                        <entry>
+                            <key>Value Separator</key>
+                        </entry>
+                        <entry>
+                            <key>Include Header Line</key>
+                        </entry>
+                        <entry>
+                            <key>Quote Character</key>
+                        </entry>
+                        <entry>
+                            <key>Escape Character</key>
+                        </entry>
+                        <entry>
+                            <key>Comment Marker</key>
+                        </entry>
+                        <entry>
+                            <key>Null String</key>
+                        </entry>
+                        <entry>
+                            <key>Trim Fields</key>
+                        </entry>
+                        <entry>
+                            <key>Quote Mode</key>
+                        </entry>
+                        <entry>
+                            <key>Record Separator</key>
+                        </entry>
+                        <entry>
+                            <key>Include Trailing Delimiter</key>
+                        </entry>
+                        <entry>
+                            <key>csvutils-character-set</key>
+                        </entry>
+                    </properties>
+                    <state>ENABLED</state>
+                    <type>org.apache.nifi.csv.CSVRecordSetWriter</type>
+                </controllerServices>
+                <controllerServices>
+                    <id>1681e200-e652-3e47-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <bundle>
+                        <artifact>nifi-lookup-services-nar</artifact>
+                        <group>org.apache.nifi</group>
+                        <version>1.6.0-SNAPSHOT</version>
+                    </bundle>
+                    <comments></comments>
+                    <descriptors>
+                        <entry>
+                            <key>csv-file</key>
+                            <value>
+                                <name>csv-file</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>csv-format</key>
+                            <value>
+                                <name>csv-format</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>lookup-key-column</key>
+                            <value>
+                                <name>lookup-key-column</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>ignore-duplicates</key>
+                            <value>
+                                <name>ignore-duplicates</name>
+                            </value>
+                        </entry>
+                    </descriptors>
+                    <name>CSVRecordLookupService</name>
+                    <persistsState>false</persistsState>
+                    <properties>
+                        <entry>
+                            <key>csv-file</key>
+                            <value>/tmp/lookup/file-2.csv</value>
+                        </entry>
+                        <entry>
+                            <key>csv-format</key>
+                        </entry>
+                        <entry>
+                            <key>lookup-key-column</key>
+                            <value>Emp_Id</value>
+                        </entry>
+                        <entry>
+                            <key>ignore-duplicates</key>
+                        </entry>
+                    </properties>
+                    <state>ENABLED</state>
+                    <type>org.apache.nifi.lookup.CSVRecordLookupService</type>
+                </controllerServices>
+                <processors>
+                    <id>812cc0bc-0e97-30d2-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>4341.052526238122</x>
+                        <y>1102.4195899743827</y>
+                    </position>
+                    <bundle>
+                        <artifact>nifi-update-attribute-nar</artifact>
+                        <group>org.apache.nifi</group>
+                        <version>1.6.0-SNAPSHOT</version>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>WARN</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+                                <key>Delete Attributes Expression</key>
+                                <value>
+                                    <name>Delete Attributes Expression</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Store State</key>
+                                <value>
+                                    <name>Store State</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Stateful Variables Initial Value</key>
+                                <value>
+                                    <name>Stateful Variables Initial Value</name>
+                                </value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+                                <key>Delete Attributes Expression</key>
+                            </entry>
+                            <entry>
+                                <key>Store State</key>
+                                <value>Do not store state</value>
+                            </entry>
+                            <entry>
+                                <key>Stateful Variables Initial Value</key>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <name>UpdateAttribute</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>STOPPED</state>
+                    <style/>
+                    <type>org.apache.nifi.processors.attributes.UpdateAttribute</type>
+                </processors>
+                <processors>
+                    <id>b63d1681-49a5-39f3-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>4377.950047287253</x>
+                        <y>845.1339677646843</y>
+                    </position>
+                    <bundle>
+                        <artifact>nifi-standard-nar</artifact>
+                        <group>org.apache.nifi</group>
+                        <version>1.6.0-SNAPSHOT</version>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>WARN</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+                                <key>record-reader</key>
+                                <value>
+                                    <identifiesControllerService>org.apache.nifi.serialization.RecordReaderFactory</identifiesControllerService>
+                                    <name>record-reader</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>record-writer</key>
+                                <value>
+                                    <identifiesControllerService>org.apache.nifi.serialization.RecordSetWriterFactory</identifiesControllerService>
+                                    <name>record-writer</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>lookup-service</key>
+                                <value>
+                                    <identifiesControllerService>org.apache.nifi.lookup.LookupService</identifiesControllerService>
+                                    <name>lookup-service</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>result-record-path</key>
+                                <value>
+                                    <name>result-record-path</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>routing-strategy</key>
+                                <value>
+                                    <name>routing-strategy</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>result-contents</key>
+                                <value>
+                                    <name>result-contents</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>key</key>
+                                <value>
+                                    <name>key</name>
+                                </value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+                                <key>record-reader</key>
+                                <value>c2beb9c0-9b7a-3d97-0000-000000000000</value>
+                            </entry>
+                            <entry>
+                                <key>record-writer</key>
+                                <value>d273639d-040c-3301-0000-000000000000</value>
+                            </entry>
+                            <entry>
+                                <key>lookup-service</key>
+                                <value>1681e200-e652-3e47-0000-000000000000</value>
+                            </entry>
+                            <entry>
+                                <key>result-record-path</key>
+                                <value>/</value>
+                            </entry>
+                            <entry>
+                                <key>routing-strategy</key>
+                                <value>route-to-success</value>
+                            </entry>
+                            <entry>
+                                <key>result-contents</key>
+                                <value>record-fields</value>
+                            </entry>
+                            <entry>
+                                <key>key</key>
+                                <value>/Emp_Id</value>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <name>LookupRecord</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>failure</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>RUNNING</state>
+                    <style/>
+                    <type>org.apache.nifi.processors.standard.LookupRecord</type>
+                </processors>
+                <processors>
+                    <id>03457e3c-babd-3723-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>4987.108990375232</x>
+                        <y>569.7805471179158</y>
+                    </position>
+                    <bundle>
+                        <artifact>nifi-standard-nar</artifact>
+                        <group>org.apache.nifi</group>
+                        <version>1.6.0-SNAPSHOT</version>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>WARN</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+                                <key>File Size</key>
+                                <value>
+                                    <name>File Size</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Batch Size</key>
+                                <value>
+                                    <name>Batch Size</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Data Format</key>
+                                <value>
+                                    <name>Data Format</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Unique FlowFiles</key>
+                                <value>
+                                    <name>Unique FlowFiles</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>generate-ff-custom-text</key>
+                                <value>
+                                    <name>generate-ff-custom-text</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>character-set</key>
+                                <value>
+                                    <name>character-set</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>absolute.path</key>
+                                <value>
+                                    <name>absolute.path</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>filename</key>
+                                <value>
+                                    <name>filename</name>
+                                </value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+                                <key>File Size</key>
+                                <value>0B</value>
+                            </entry>
+                            <entry>
+                                <key>Batch Size</key>
+                                <value>1</value>
+                            </entry>
+                            <entry>
+                                <key>Data Format</key>
+                                <value>Text</value>
+                            </entry>
+                            <entry>
+                                <key>Unique FlowFiles</key>
+                                <value>false</value>
+                            </entry>
+                            <entry>
+                                <key>generate-ff-custom-text</key>
+                            </entry>
+                            <entry>
+                                <key>character-set</key>
+                                <value>UTF-8</value>
+                            </entry>
+                            <entry>
+                                <key>absolute.path</key>
+                                <value>/tmp/lookup</value>
+                            </entry>
+                            <entry>
+                                <key>filename</key>
+                                <value>file-1.csv</value>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>1d</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <name>GenerateFlowFile</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>RUNNING</state>
+                    <style/>
+                    <type>org.apache.nifi.processors.standard.GenerateFlowFile</type>
+                </processors>
+                <processors>
+                    <id>0b5a9430-aa0a-3ab4-0000-000000000000</id>
+                    <parentGroupId>f5934ad0-2f5f-3584-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>4989.7195362039765</x>
+                        <y>836.4650479286041</y>
+                    </position>
+                    <bundle>
+                        <artifact>nifi-standard-nar</artifact>
+                        <group>org.apache.nifi</group>
+                        <version>1.6.0-SNAPSHOT</version>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>WARN</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+                                <key>File to Fetch</key>
+                                <value>
+                                    <name>File to Fetch</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Completion Strategy</key>
+                                <value>
+                                    <name>Completion Strategy</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Move Destination Directory</key>
+                                <value>
+                                    <name>Move Destination Directory</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Move Conflict Strategy</key>
+                                <value>
+                                    <name>Move Conflict Strategy</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Log level when file not found</key>
+                                <value>
+                                    <name>Log level when file not found</name>
+                                </value>
+                            </entry>
+                            <entry>
+                                <key>Log level when permission denied</key>
+                                <value>
+                                    <name>Log level when permission denied</name>
+                                </value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+                                <key>File to Fetch</key>
+                                <value>${absolute.path}/${filename}</value>
+                            </entry>
+                            <entry>
+                                <key>Completion Strategy</key>
+                                <value>None</value>
+                            </entry>
+                            <entry>
+                                <key>Move Destination Directory</key>
+                            </entry>
+                            <entry>
+                                <key>Move Conflict Strategy</key>
+                                <value>Rename</value>
+                            </entry>
+                            <entry>
+                                <key>Log level when file not found</key>
+                                <value>ERROR</value>
+                            </entry>
+                            <entry>
+                                <key>Log level when permission denied</key>
+                                <value>ERROR</value>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <name>FetchFile</name>
+                    <relationships>
+                        <autoTerminate>true</autoTerminate>
+                        <name>failure</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>true</autoTerminate>
+                        <name>not.found</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>true</autoTerminate>
+                        <name>permission.denied</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>RUNNING</state>
+                    <style/>
+                    <type>org.apache.nifi.processors.standard.FetchFile</type>
+                </processors>
+            </contents>
+            <name>JoinCSVRecords</name>
+            <variables/>
+        </processGroups>
+    </snippet>
+    <timestamp>01/31/2018 10:44:52 JST</timestamp>
+</template>

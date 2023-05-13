@@ -1,0 +1,239 @@
+:root {
+    --text-primary-color: #262626;
+    --text-secondary-color: #728e9b;
+
+    --primary-color: #b8c6cd;
+    --secondary-color: rgb(227, 232, 235);
+    --secondary-color-rgb: 227, 232, 235;
+
+    --table-light-color: #ffffff;
+    --table-dark-color: #f4f6f7;
+
+    --node-background-color: #ffff;
+    --label-background-color: rgb(255, 247, 215);
+
+    --connection-startpoint-color: #f00;
+    --connection-midpoint-color: #fc0;
+    --connection-endpoint-color: #00f;
+
+    --nifi-name-padding: 10px;
+    --nifi-name-font-size: 24px;
+    --nifi-proc-type-size: 16px;
+}
+
+.diagram-pan {
+    display: block;
+    font-family: Roboto, sans-serif;
+    color: var(--text-primary-color);
+    background-color: var(--node-background-color);
+    background-size: 14px 14px;
+    background-image: linear-gradient(to right, rgba(229, 235, 237, 1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(229, 235, 237, 1) 1px, transparent 1px)
+}
+
+.nifi-node {
+    text-align: center;
+    cursor: auto;
+    background-color: var(--secondary-color);
+    /*box-shadow: 0 0 20pt var(--text-primary-color);*/
+    border: solid;
+    border-radius: 2pt;
+    overflow: hidden;
+}
+
+.nifi-node:hover {
+    /*transition: .1s;*/
+    box-shadow: 0 0 3pt 2pt var(--text-primary-color);
+}
+
+.nifi-node:focus {
+    box-shadow: 0 0 3pt 2pt var(--connection-endpoint-color);
+}
+
+/* --- Processor */
+.nifi-name {
+    padding: var(--nifi-name-padding);
+    font-size: var(--nifi-name-font-size);
+}
+
+.nifi-processor-type:hover {
+    cursor: pointer;
+}
+
+.nifi-processGroup .nifi-name {
+    background-color: var(--primary-color);
+}
+
+.nifi-processor-type {
+    text-align: center;
+    font-size: var(--nifi-proc-type-size);
+}
+
+/* --- Bend */
+.nifi-bend {
+    background-color: var(--connection-midpoint-color);
+}
+
+/* --- Funnel */
+.nifi-funnel {
+    line-height: 43px;
+}
+
+/* --- Port */
+.nifi-outputPort, .nifi-inputPort {
+    background-color: var(--primary-color);
+}
+
+/* --- Label */
+.nifi-label {
+    background-color: var(--label-background-color);
+    border-radius: 0px;
+    border: solid;
+    text-align: left;
+    padding-left: 2px;
+}
+
+.nifi-relationship {
+    z-index: 6;
+    background-color: #ffcc00;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+/* --- Table */
+.nifi-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.nifi-table tr.nifi-table-header td {
+    background-color: var(--text-secondary-color) !important;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+}
+.nifi-table tr.nifi-table-header {
+    outline: none !important;
+}
+.nifi-table-header tr {
+    border-collapse: collapse;
+}
+.nifi-table tr {
+    font-size: 14px;
+    height: 24px;
+    width: 100%;
+    overflow: auto;
+}
+.nifi-table tr:hover {
+    outline: 2px solid black;
+}
+.nifi-table tr:hover td {
+    background-color: var(--connection-midpoint-color);
+}
+.nifi-table tr:nth-child(even){
+    background-color: white;
+}
+.nifi-table tr:nth-child(odd){
+    background-color: #f4f6f7;
+}
+.nifi-table tr td:first-child {
+    font-weight: bold;
+}
+.nifi-table tr td {
+    padding: 2px 2px 5px 5px;
+}
+
+/* --- Details */
+.nifi-details-pane {
+    font-family: Roboto, sans-serif;
+    color: var(--text-primary-color);
+}
+.details-header {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: lighter;
+    width: 100%;
+    background-color: var(--text-secondary-color);
+    color: white;
+}
+.details-header .nifi-processor-type {
+    padding: 10px;
+    font-size: 18px;
+}
+.nifi-details-pane {
+    background-color: white;
+}
+
+/* --- Tabs */
+.details-body {
+    padding: 10px;
+}
+.details-body .tab-pane {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    align-items: center;
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.details-body .tab-pane .tab {
+    flex: 1;
+    background-color: var(--primary-color);
+    border-width: 0;
+    border-top: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--text-primary-color);
+    border-left: 2px solid var(--primary-color);
+    border-right: 2px solid var(--primary-color);
+}
+.details-body .tab-pane .tab.selected-tab button {
+    background-color: white;
+}
+.details-body .tab-pane .tab.selected-tab {
+    border-top: 2px solid var(--text-primary-color);
+    border-bottom: 0;
+    border-left: 2px solid var(--text-primary-color);
+    border-right: 2px solid var(--text-primary-color);
+}
+.details-body .tab-pane .tab + .tab {
+    border-left: 0;
+}
+.details-body .tab-pane .tab ~ .tab.selected-tab {
+    /*border-right: 0;*/
+}
+.details-body .tab-pane .tab + .tab.selected-tab {
+    border-left: 2px solid var(--text-primary-color);
+}
+.details-body .tab-pane button {
+    width: 100%;
+    line-height: 32px;
+    text-transform: uppercase;
+    color: var(--text-secondary-color);
+    background-color: var(--secondary-color);
+    font-weight: bolder;
+    font-size: 12px;
+    border-radius: 0;
+    border: none
+}
+
+/* --- Breadcrumb */
+.nifi-breadcrumb {
+    background: rgba(var(--secondary-color-rgb), 0.8);
+    display: flex;
+    font-family: Roboto, sans-serif;
+    color: var(--text-secondary-color);
+    align-content: center;
+    border: 2px solid;
+}
+.nifi-breadcrumb a,p {
+    cursor: pointer;
+    padding: 10px;
+    margin: 0;
+    align-content: center;
+}
+.nifi-breadcrumb a:hover {
+    font-weight: bold;
+}

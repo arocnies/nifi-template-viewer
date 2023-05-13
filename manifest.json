@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "NiFi Template Viewer",
+  "description": "View NiFi templates directly on the web! Currently supports GitHub. Navigate to the template XML and click the \"NiFi\" button to toggle the diagram view.",
+  "version": "1.0",
+  "icons": {
+    "16": "images/src_images_nifi16.png",
+    "32": "images/src_images_nifi16.png",
+    "64": "images/nifi_64.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/jsplumb.bundle.js",
+        "scripts/template.js",
+        "scripts/diagram.js",
+        "content.js"
+      ],
+      "matches": [
+        "https://github.com/*/blob/*"
+      ]
+    }
+  ]
+}

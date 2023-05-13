@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NiFi Template Viewer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="nifi.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container-fluid col-11">
+        <span class="navbar-brand mb-0 h1">NiFi Template Viewer</span>
+        <span class="nav-item d-flex">
+            <select id="examples" class="form-select form-select-lg" style="margin-right: 5px"></select>
+            <button id="random" class="nav-item btn-outline-primary form-control">Random</button>
+        </span>
+        <span class="nav-item d-flex">
+            <input type="file" accept=".xml" class="nav-item form-control-file form-control col-8" id="fileInput" style="margin-right: 5px">
+            <button id="load" class="btn-outline-primary form-control col-4">Load File</button>
+        </span>
+    </div>
+</nav>
+<div class="container col-md-11">
+    <div class="row">
+
+    </div>
+    <div class="row">
+        <div id="detail" class="col-md-3" style="max-height: 80vh; overflow: auto">
+            <div class="nifi-details-pane">
+                <div class="details-header">
+                    <div class="nifi-name">NAME</div>
+                    <div>|</div>
+                    <a class="nifi-processor-type">TYPE</a>
+                </div>
+                <div class="details-body" style="">
+                    <ul class="tab-pane">
+                        <li class="tab" data-tab="settings">
+                            <button>Settings</button>
+                        </li>
+                        <li class="tab selected-tab" data-tab="properties">
+                            <button>Properties</button>
+                        </li>
+                        <li class="tab" data-tab="relationships">
+                            <button>Relationships</button>
+                        </li>
+                        <li class="tab" data-tab="comments">
+                            <button>Comments</button>
+                        </li>
+                    </ul>
+                    <div class="tab-contents">
+                        <div class="tab-content" style="display: none" data-tab="settings">
+                            <table class="nifi-table">
+                                <tr class="nifi-table-header">
+                                    <td>Setting</td>
+                                    <td>Value</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-content active" data-tab="properties">
+                            <table class="nifi-table">
+                                <tr class="nifi-table-header">
+                                    <td>Property</td>
+                                    <td>Value</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-content" style="display: none" data-tab="relationships">
+                            <table class="nifi-table">
+                                <tr class="nifi-table-header">
+                                    <td>Name</td>
+                                    <td>Auto Terminate</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-content" style="display: none" data-tab="comments">
+                            comments
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div id="breadcrumb" class="nifi-breadcrumb"></div>
+            <div id="app" style="height: 80vh"></div>
+        </div>
+    </div>
+</div>
+
+<script src="bundle.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

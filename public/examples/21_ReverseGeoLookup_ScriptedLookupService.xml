@@ -1,0 +1,927 @@
+<?xml version="1.0" ?>
+<template encoding-version="1.1">
+  <description>This template provides an example of using ScriptedLookupService
+to perform a lookup of latitude and longitude values against the
+Google Reverse Lookup web API, and return the specified location
+in the same record</description>
+  <groupId>3ad97bbd-015c-1000-cc5d-de0731e2bcd5</groupId>
+  <name>ReverseGeoLookup_ScriptedLookupService</name>
+  <snippet>
+    <connections>
+      <id>ffb519c2-aaf3-3baf-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+      <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+      <destination>
+        <groupId>1d994300-fd59-339e-0000-000000000000</groupId>
+        <id>412646bf-9f19-3cc0-0000-000000000000</id>
+        <type>PROCESSOR</type>
+      </destination>
+      <flowFileExpiration>0 sec</flowFileExpiration>
+      <labelIndex>1</labelIndex>
+      <name></name>
+      <selectedRelationships>matched</selectedRelationships>
+      <source>
+        <groupId>1d994300-fd59-339e-0000-000000000000</groupId>
+        <id>e9e4a255-983d-3675-0000-000000000000</id>
+        <type>PROCESSOR</type>
+      </source>
+      <zIndex>0</zIndex>
+    </connections>
+    <connections>
+      <id>2cd7d8b1-9763-3143-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+      <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+      <destination>
+        <groupId>1d994300-fd59-339e-0000-000000000000</groupId>
+        <id>e9e4a255-983d-3675-0000-000000000000</id>
+        <type>PROCESSOR</type>
+      </destination>
+      <flowFileExpiration>0 sec</flowFileExpiration>
+      <labelIndex>1</labelIndex>
+      <name></name>
+      <selectedRelationships>success</selectedRelationships>
+      <source>
+        <groupId>1d994300-fd59-339e-0000-000000000000</groupId>
+        <id>fa7bf4d9-d271-3376-0000-000000000000</id>
+        <type>PROCESSOR</type>
+      </source>
+      <zIndex>0</zIndex>
+    </connections>
+    <controllerServices>
+      <id>a549fc72-2ba2-31ce-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <bundle>
+        <artifact>nifi-scripting-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0-SNAPSHOT</version>
+      </bundle>
+      <comments></comments>
+      <descriptors>
+        <entry>
+          <key>Script Engine</key>
+          <value>
+            <name>Script Engine</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Script File</key>
+          <value>
+            <name>Script File</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Script Body</key>
+          <value>
+            <name>Script Body</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Module Directory</key>
+          <value>
+            <name>Module Directory</name>
+          </value>
+        </entry>
+        <entry>
+          <key>googleApiKey</key>
+          <value>
+            <name>googleApiKey</name>
+          </value>
+        </entry>
+      </descriptors>
+      <name>ScriptedLookupService</name>
+      <persistsState>false</persistsState>
+      <properties>
+        <entry>
+          <key>Script Engine</key>
+          <value>Groovy</value>
+        </entry>
+        <entry>
+          <key>Script File</key>
+        </entry>
+        <entry>
+          <key>Script Body</key>
+          <value>import org.apache.nifi.controller.ControllerServiceInitializationContext
+import org.apache.nifi.reporting.InitializationException
+
+
+class GroovyLookupService implements LookupService&lt;String&gt; {
+
+   def apiKey
+   def log
+    
+   @Override
+    Optional&lt;String&gt; lookup(Map&lt;String,String&gt; coords) {
+
+      def lat = coords['lat']
+      def lng = coords['lng']
+        
+      def fmt_addr = (new groovy.json.JsonSlurper()).parseText(
+         new URL("https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&amp;key=${apiKey}").text)
+         .results[0].formatted_address
+
+      Optional.ofNullable(fmt_addr?.toString())
+    }
+
+    @Override
+    Class&lt;?&gt; getValueType() {
+        return String
+    }
+
+    @Override
+    Set&lt;String&gt; getRequiredKeys() {
+      return ['lat','lng'] as Set&lt;String&gt;
+    }
+
+    void setLogger(logger) {
+       log = logger
+    }
+
+    void onEnabled(context) {
+        def googleApiKeyPropertyDescriptor = context.properties.find {k,v -&gt; k.name == 'googleApiKey'}?.key
+        apiKey = context.getProperty(googleApiKeyPropertyDescriptor)?.evaluateAttributeExpressions()?.value
+    }
+
+    @Override
+    void initialize(ControllerServiceInitializationContext context) throws InitializationException {
+
+    }
+
+    @Override
+    Collection&lt;ValidationResult&gt; validate(ValidationContext context) {
+        return null
+    }
+
+    @Override
+    PropertyDescriptor getPropertyDescriptor(String name) {
+        return null
+    }
+
+    @Override
+    void onPropertyModified(PropertyDescriptor descriptor, String oldValue, String newValue) {
+
+    }
+
+    @Override
+    List&lt;PropertyDescriptor&gt; getPropertyDescriptors() {
+        return null
+    }
+
+    @Override
+    String getIdentifier() {
+        return null
+    }
+}
+
+lookupService = new GroovyLookupService()</value>
+        </entry>
+        <entry>
+          <key>Module Directory</key>
+        </entry>
+        <entry>
+          <key>googleApiKey</key>
+          <value>Your Google API Key Here</value>
+        </entry>
+      </properties>
+      <state>ENABLED</state>
+      <type>org.apache.nifi.lookup.script.ScriptedLookupService</type>
+    </controllerServices>
+    <controllerServices>
+      <id>e2503430-fe83-3ff3-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <bundle>
+        <artifact>nifi-registry-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0-SNAPSHOT</version>
+      </bundle>
+      <comments></comments>
+      <descriptors>
+        <entry>
+          <key>enriched</key>
+          <value>
+            <name>enriched</name>
+          </value>
+        </entry>
+        <entry>
+          <key>geoData</key>
+          <value>
+            <name>geoData</name>
+          </value>
+        </entry>
+        <entry>
+          <key>users_csv</key>
+          <value>
+            <name>users_csv</name>
+          </value>
+        </entry>
+      </descriptors>
+      <name>AvroSchemaRegistry</name>
+      <persistsState>false</persistsState>
+      <properties>
+        <entry>
+          <key>enriched</key>
+          <value>{
+  "type":"record",
+  "name":"enrichedGeoData",
+  "fields":[
+    {"name":"timestamp","type":["null","string"]},
+    {"name":"event_type","type":["null","string"]},
+    {"name":"num1","type":["null","int"]},
+    {"name":"num2","type":["null","int"]},
+    {"name":"user","type":["null","string"]},
+    {"name":"sensor_id","type":["null","string"]},
+    {"name":"direction","type":["null","string"]},
+    {"name":"traffic","type":["null","string"]},
+    {"name":"lat","type":["null","float"]},
+    {"name":"lng","type":["null","float"]},
+    {"name":"dst","type":["null","int"]},
+    {"name":"location","type":["null","string"]}
+  ]
+}</value>
+        </entry>
+        <entry>
+          <key>geoData</key>
+          <value>{
+  "type":"record",
+  "name":"geoData",
+  "fields":[
+    {"name":"timestamp","type":["null","string"]},
+    {"name":"event_type","type":["null","string"]},
+    {"name":"num1","type":["null","int"]},
+    {"name":"num2","type":["null","int"]},
+    {"name":"user","type":["null","string"]},
+    {"name":"sensor_id","type":["null","string"]},
+    {"name":"direction","type":["null","string"]},
+    {"name":"traffic","type":["null","string"]},
+    {"name":"lat","type":["null","float"]},
+    {"name":"lng","type":["null","float"]},
+    {"name":"dst","type":["null","int"]}
+  ]
+}</value>
+        </entry>
+        <entry>
+          <key>users_csv</key>
+          <value>{"type":"record","name":"csv_record","fields":[{"name":"gender","type":["null","string"]},{"name":"title","type":["null","string"]},{"name":"first","type":["null","string"]},{"name":"last","type":["null","string"]},{"name":"street","type":["null","string"]},{"name":"city","type":["null","string"]},{"name":"state","type":["null","string"]},{"name":"zip","type":["null","string"]},{"name":"email","type":["null","string"]},{"name":"username","type":["null","string"]},{"name":"password","type":["null","string"]},{"name":"salt","type":["null","string"]},{"name":"md5","type":["null","string"]},{"name":"sha1","type":["null","string"]},{"name":"sha256","type":["null","string"]},{"name":"registered","type":["null","string"]},{"name":"dob","type":["null","string"]},{"name":"phone","type":["null","string"]},{"name":"cell","type":["null","string"]},{"name":"SSN","type":["null","string"]},{"name":"large","type":["null","string"]},{"name":"medium","type":["null","string"]},{"name":"thumbnail","type":["null","string"]},{"name":"version","type":["null","string"]},{"name":"nationality","type":["null","string"]}]}</value>
+        </entry>
+      </properties>
+      <state>ENABLED</state>
+      <type>org.apache.nifi.schemaregistry.services.AvroSchemaRegistry</type>
+    </controllerServices>
+    <controllerServices>
+      <id>53e34351-b658-3a29-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <bundle>
+        <artifact>nifi-record-serialization-services-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0-SNAPSHOT</version>
+      </bundle>
+      <comments></comments>
+      <descriptors>
+        <entry>
+          <key>Schema Write Strategy</key>
+          <value>
+            <name>Schema Write Strategy</name>
+          </value>
+        </entry>
+        <entry>
+          <key>schema-access-strategy</key>
+          <value>
+            <name>schema-access-strategy</name>
+          </value>
+        </entry>
+        <entry>
+          <key>schema-registry</key>
+          <value>
+            <identifiesControllerService>org.apache.nifi.schemaregistry.services.SchemaRegistry</identifiesControllerService>
+            <name>schema-registry</name>
+          </value>
+        </entry>
+        <entry>
+          <key>schema-name</key>
+          <value>
+            <name>schema-name</name>
+          </value>
+        </entry>
+        <entry>
+          <key>schema-text</key>
+          <value>
+            <name>schema-text</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Date Format</key>
+          <value>
+            <name>Date Format</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Time Format</key>
+          <value>
+            <name>Time Format</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Timestamp Format</key>
+          <value>
+            <name>Timestamp Format</name>
+          </value>
+        </entry>
+        <entry>
+          <key>CSV Format</key>
+          <value>
+            <name>CSV Format</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Value Separator</key>
+          <value>
+            <name>Value Separator</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Include Header Line</key>
+          <value>
+            <name>Include Header Line</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Quote Character</key>
+          <value>
+            <name>Quote Character</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Escape Character</key>
+          <value>
+            <name>Escape Character</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Comment Marker</key>
+          <value>
+            <name>Comment Marker</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Null String</key>
+          <value>
+            <name>Null String</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Trim Fields</key>
+          <value>
+            <name>Trim Fields</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Quote Mode</key>
+          <value>
+            <name>Quote Mode</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Record Separator</key>
+          <value>
+            <name>Record Separator</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Include Trailing Delimiter</key>
+          <value>
+            <name>Include Trailing Delimiter</name>
+          </value>
+        </entry>
+      </descriptors>
+      <name>CSVRecordSetWriter</name>
+      <persistsState>false</persistsState>
+      <properties>
+        <entry>
+          <key>Schema Write Strategy</key>
+          <value>schema-name</value>
+        </entry>
+        <entry>
+          <key>schema-access-strategy</key>
+          <value>schema-name</value>
+        </entry>
+        <entry>
+          <key>schema-registry</key>
+          <value>e2503430-fe83-3ff3-0000-000000000000</value>
+        </entry>
+        <entry>
+          <key>schema-name</key>
+          <value>enriched</value>
+        </entry>
+        <entry>
+          <key>schema-text</key>
+          <value>${avro.schema}</value>
+        </entry>
+        <entry>
+          <key>Date Format</key>
+        </entry>
+        <entry>
+          <key>Time Format</key>
+        </entry>
+        <entry>
+          <key>Timestamp Format</key>
+        </entry>
+        <entry>
+          <key>CSV Format</key>
+          <value>custom</value>
+        </entry>
+        <entry>
+          <key>Value Separator</key>
+          <value>|</value>
+        </entry>
+        <entry>
+          <key>Include Header Line</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>Quote Character</key>
+          <value>"</value>
+        </entry>
+        <entry>
+          <key>Escape Character</key>
+          <value>\</value>
+        </entry>
+        <entry>
+          <key>Comment Marker</key>
+        </entry>
+        <entry>
+          <key>Null String</key>
+        </entry>
+        <entry>
+          <key>Trim Fields</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>Quote Mode</key>
+          <value>MINIMAL</value>
+        </entry>
+        <entry>
+          <key>Record Separator</key>
+          <value>\n</value>
+        </entry>
+        <entry>
+          <key>Include Trailing Delimiter</key>
+          <value>false</value>
+        </entry>
+      </properties>
+      <state>ENABLED</state>
+      <type>org.apache.nifi.csv.CSVRecordSetWriter</type>
+    </controllerServices>
+    <controllerServices>
+      <id>72b7797d-72a8-388b-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <bundle>
+        <artifact>nifi-record-serialization-services-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0-SNAPSHOT</version>
+      </bundle>
+      <comments></comments>
+      <descriptors>
+        <entry>
+          <key>schema-access-strategy</key>
+          <value>
+            <name>schema-access-strategy</name>
+          </value>
+        </entry>
+        <entry>
+          <key>schema-registry</key>
+          <value>
+            <identifiesControllerService>org.apache.nifi.schemaregistry.services.SchemaRegistry</identifiesControllerService>
+            <name>schema-registry</name>
+          </value>
+        </entry>
+        <entry>
+          <key>schema-name</key>
+          <value>
+            <name>schema-name</name>
+          </value>
+        </entry>
+        <entry>
+          <key>schema-text</key>
+          <value>
+            <name>schema-text</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Date Format</key>
+          <value>
+            <name>Date Format</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Time Format</key>
+          <value>
+            <name>Time Format</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Timestamp Format</key>
+          <value>
+            <name>Timestamp Format</name>
+          </value>
+        </entry>
+        <entry>
+          <key>CSV Format</key>
+          <value>
+            <name>CSV Format</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Value Separator</key>
+          <value>
+            <name>Value Separator</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Skip Header Line</key>
+          <value>
+            <name>Skip Header Line</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Quote Character</key>
+          <value>
+            <name>Quote Character</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Escape Character</key>
+          <value>
+            <name>Escape Character</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Comment Marker</key>
+          <value>
+            <name>Comment Marker</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Null String</key>
+          <value>
+            <name>Null String</name>
+          </value>
+        </entry>
+        <entry>
+          <key>Trim Fields</key>
+          <value>
+            <name>Trim Fields</name>
+          </value>
+        </entry>
+      </descriptors>
+      <name>CSVReader</name>
+      <persistsState>false</persistsState>
+      <properties>
+        <entry>
+          <key>schema-access-strategy</key>
+          <value>schema-name</value>
+        </entry>
+        <entry>
+          <key>schema-registry</key>
+          <value>e2503430-fe83-3ff3-0000-000000000000</value>
+        </entry>
+        <entry>
+          <key>schema-name</key>
+          <value>geoData</value>
+        </entry>
+        <entry>
+          <key>schema-text</key>
+          <value>${avro.schema}</value>
+        </entry>
+        <entry>
+          <key>Date Format</key>
+        </entry>
+        <entry>
+          <key>Time Format</key>
+        </entry>
+        <entry>
+          <key>Timestamp Format</key>
+        </entry>
+        <entry>
+          <key>CSV Format</key>
+          <value>custom</value>
+        </entry>
+        <entry>
+          <key>Value Separator</key>
+          <value>|</value>
+        </entry>
+        <entry>
+          <key>Skip Header Line</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>Quote Character</key>
+          <value>"</value>
+        </entry>
+        <entry>
+          <key>Escape Character</key>
+          <value>\</value>
+        </entry>
+        <entry>
+          <key>Comment Marker</key>
+        </entry>
+        <entry>
+          <key>Null String</key>
+        </entry>
+        <entry>
+          <key>Trim Fields</key>
+          <value>true</value>
+        </entry>
+      </properties>
+      <state>ENABLED</state>
+      <type>org.apache.nifi.csv.CSVReader</type>
+    </controllerServices>
+    <processors>
+      <id>e9e4a255-983d-3675-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <position>
+        <x>2.527099609375</x>
+        <y>262.51396560668945</y>
+      </position>
+      <bundle>
+        <artifact>nifi-standard-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0-SNAPSHOT</version>
+      </bundle>
+      <config>
+        <bulletinLevel>WARN</bulletinLevel>
+        <comments></comments>
+        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+        <descriptors>
+          <entry>
+            <key>record-reader</key>
+            <value>
+              <identifiesControllerService>org.apache.nifi.serialization.RecordReaderFactory</identifiesControllerService>
+              <name>record-reader</name>
+            </value>
+          </entry>
+          <entry>
+            <key>record-writer</key>
+            <value>
+              <identifiesControllerService>org.apache.nifi.serialization.RecordSetWriterFactory</identifiesControllerService>
+              <name>record-writer</name>
+            </value>
+          </entry>
+          <entry>
+            <key>lookup-service</key>
+            <value>
+              <identifiesControllerService>org.apache.nifi.lookup.LookupService</identifiesControllerService>
+              <name>lookup-service</name>
+            </value>
+          </entry>
+          <entry>
+            <key>result-record-path</key>
+            <value>
+              <name>result-record-path</name>
+            </value>
+          </entry>
+          <entry>
+            <key>routing-strategy</key>
+            <value>
+              <name>routing-strategy</name>
+            </value>
+          </entry>
+          <entry>
+            <key>lat</key>
+            <value>
+              <name>lat</name>
+            </value>
+          </entry>
+          <entry>
+            <key>lng</key>
+            <value>
+              <name>lng</name>
+            </value>
+          </entry>
+        </descriptors>
+        <executionNode>ALL</executionNode>
+        <lossTolerant>false</lossTolerant>
+        <penaltyDuration>30 sec</penaltyDuration>
+        <properties>
+          <entry>
+            <key>record-reader</key>
+            <value>72b7797d-72a8-388b-0000-000000000000</value>
+          </entry>
+          <entry>
+            <key>record-writer</key>
+            <value>53e34351-b658-3a29-0000-000000000000</value>
+          </entry>
+          <entry>
+            <key>lookup-service</key>
+            <value>a549fc72-2ba2-31ce-0000-000000000000</value>
+          </entry>
+          <entry>
+            <key>result-record-path</key>
+            <value>/location</value>
+          </entry>
+          <entry>
+            <key>routing-strategy</key>
+            <value>route-to-matched-unmatched</value>
+          </entry>
+          <entry>
+            <key>lat</key>
+            <value>/lat</value>
+          </entry>
+          <entry>
+            <key>lng</key>
+            <value>/lng</value>
+          </entry>
+        </properties>
+        <runDurationMillis>0</runDurationMillis>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <yieldDuration>1 sec</yieldDuration>
+      </config>
+      <name>ReverseGeoLookup</name>
+      <relationships>
+        <autoTerminate>true</autoTerminate>
+        <name>failure</name>
+      </relationships>
+      <relationships>
+        <autoTerminate>false</autoTerminate>
+        <name>matched</name>
+      </relationships>
+      <relationships>
+        <autoTerminate>true</autoTerminate>
+        <name>unmatched</name>
+      </relationships>
+      <style></style>
+      <type>org.apache.nifi.processors.standard.LookupRecord</type>
+    </processors>
+    <processors>
+      <id>fa7bf4d9-d271-3376-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <position>
+        <x>1.3599853515625</x>
+        <y>0.0</y>
+      </position>
+      <bundle>
+        <artifact>nifi-standard-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0-SNAPSHOT</version>
+      </bundle>
+      <config>
+        <bulletinLevel>WARN</bulletinLevel>
+        <comments></comments>
+        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+        <descriptors>
+          <entry>
+            <key>File Size</key>
+            <value>
+              <name>File Size</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Batch Size</key>
+            <value>
+              <name>Batch Size</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Data Format</key>
+            <value>
+              <name>Data Format</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Unique FlowFiles</key>
+            <value>
+              <name>Unique FlowFiles</name>
+            </value>
+          </entry>
+          <entry>
+            <key>generate-ff-custom-text</key>
+            <value>
+              <name>generate-ff-custom-text</name>
+            </value>
+          </entry>
+        </descriptors>
+        <executionNode>ALL</executionNode>
+        <lossTolerant>false</lossTolerant>
+        <penaltyDuration>30 sec</penaltyDuration>
+        <properties>
+          <entry>
+            <key>File Size</key>
+            <value>0B</value>
+          </entry>
+          <entry>
+            <key>Batch Size</key>
+            <value>1</value>
+          </entry>
+          <entry>
+            <key>Data Format</key>
+            <value>Text</value>
+          </entry>
+          <entry>
+            <key>Unique FlowFiles</key>
+            <value>false</value>
+          </entry>
+          <entry>
+            <key>generate-ff-custom-text</key>
+            <value>2016-09-21 07:57:59.605|truck_geo_event|28|10|Joe Smith|1390372503|Saint Louis to Tulsa|Normal|38.64|-90.18|1</value>
+          </entry>
+        </properties>
+        <runDurationMillis>0</runDurationMillis>
+        <schedulingPeriod>30 sec</schedulingPeriod>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <yieldDuration>1 sec</yieldDuration>
+      </config>
+      <name>GenerateFlowFile</name>
+      <relationships>
+        <autoTerminate>false</autoTerminate>
+        <name>success</name>
+      </relationships>
+      <style></style>
+      <type>org.apache.nifi.processors.standard.GenerateFlowFile</type>
+    </processors>
+    <processors>
+      <id>412646bf-9f19-3cc0-0000-000000000000</id>
+      <parentGroupId>1d994300-fd59-339e-0000-000000000000</parentGroupId>
+      <position>
+        <x>0.0</x>
+        <y>534.7343940734863</y>
+      </position>
+      <bundle>
+        <artifact>nifi-standard-nar</artifact>
+        <group>org.apache.nifi</group>
+        <version>1.3.0-SNAPSHOT</version>
+      </bundle>
+      <config>
+        <bulletinLevel>WARN</bulletinLevel>
+        <comments></comments>
+        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+        <descriptors>
+          <entry>
+            <key>Log Level</key>
+            <value>
+              <name>Log Level</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Log Payload</key>
+            <value>
+              <name>Log Payload</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Attributes to Log</key>
+            <value>
+              <name>Attributes to Log</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Attributes to Ignore</key>
+            <value>
+              <name>Attributes to Ignore</name>
+            </value>
+          </entry>
+          <entry>
+            <key>Log prefix</key>
+            <value>
+              <name>Log prefix</name>
+            </value>
+          </entry>
+        </descriptors>
+        <executionNode>ALL</executionNode>
+        <lossTolerant>false</lossTolerant>
+        <penaltyDuration>30 sec</penaltyDuration>
+        <properties>
+          <entry>
+            <key>Log Level</key>
+            <value>info</value>
+          </entry>
+          <entry>
+            <key>Log Payload</key>
+            <value>true</value>
+          </entry>
+          <entry>
+            <key>Attributes to Log</key>
+          </entry>
+          <entry>
+            <key>Attributes to Ignore</key>
+          </entry>
+          <entry>
+            <key>Log prefix</key>
+          </entry>
+        </properties>
+        <runDurationMillis>0</runDurationMillis>
+        <schedulingPeriod>0 sec</schedulingPeriod>
+        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+        <yieldDuration>1 sec</yieldDuration>
+      </config>
+      <name>LogAttribute</name>
+      <relationships>
+        <autoTerminate>true</autoTerminate>
+        <name>success</name>
+      </relationships>
+      <style></style>
+      <type>org.apache.nifi.processors.standard.LogAttribute</type>
+    </processors>
+  </snippet>
+  <timestamp>05/24/2017 12:28:27 EDT</timestamp>
+</template>
