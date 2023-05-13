@@ -6,7 +6,7 @@ document.getElementById("load").onclick = () => {
     const file = fileInput.files[0]
     showTemplateFile(file)
 }
-fileInput.addEventListener("change", (e) => {
+fileInput.addEventListener("change", (_) => {
     showTemplateFile(fileInput.files[0])
 });
 
@@ -24,42 +24,44 @@ function showTemplateFile(file) {
     }
 }
 
-function importAll(r) {
-    return r.keys().map((key) => {
-        const fileName = key.split('/').pop()
-        return {
-            fileName,
-            module: r(key),
-        };
-    });
-}
+const loadExampleFiles = () => {
+    const exampleSelector = document.getElementById("examples")
 
-const exampleFiles = importAll(require.context('/public/examples', false, /\.(xml)$/));
-const exampleSelector = document.getElementById("examples")
-const fileNames = exampleFiles.map((file) => file.fileName);
-fileNames.forEach((file) => {
-    const option = document.createElement("option")
-    option.text = file.slice(0, -4)
-    option.value = file
-    exampleSelector.add(option)
-})
-const randomExampleBtn = document.getElementById("random")
-randomExampleBtn.onclick = () => {
-    exampleSelector.selectedIndex = Math.floor(Math.random() * exampleSelector.options.length)
-    exampleSelector.dispatchEvent(new Event("change"));
-}
-exampleSelector.addEventListener("change", (_) => {
-    const selectedFile = exampleSelector.value
-    const fileName = "/examples/" + exampleFiles.find((file) => file.fileName === selectedFile).fileName;
-    fetch(fileName)
-        .then(response => response.text())
-        .then(fileContent => {
-            nifi.showTemplate(fileContent)
-            fileInput.value = ""
+    // Fetch the file list
+    fetch('/examples/filelist.json')
+        .then((response) => response.json())
+        .then((fileList) => {
+            fileList.forEach((fileName) => {
+                const option = document.createElement("option")
+                option.text = fileName.slice(0, -4)
+                option.value = fileName
+                exampleSelector.add(option)
+            })
+
+            exampleSelector.addEventListener("change", (_) => {
+                const selectedFile = exampleSelector.value
+                const filePath = "/examples/" + selectedFile
+                fetch(filePath)
+                    .then((response) => response.text())
+                    .then((fileContent) => {
+                        nifi.showTemplate(fileContent)
+                        fileInput.value = ""
+                    })
+                    .catch((error) => {
+                        console.error(error)
+                    })
+            })
+
+            exampleSelector.dispatchEvent(new Event("change"))
         })
-        .catch(error => {
+        .catch((error) => {
             console.error(error)
         })
-});
+    const randomExampleBtn = document.getElementById("random")
+    randomExampleBtn.onclick = () => {
+        exampleSelector.selectedIndex = Math.floor(Math.random() * exampleSelector.options.length)
+        exampleSelector.dispatchEvent(new Event("change"))
+    }
+}
 
-exampleSelector.dispatchEvent(new Event("change"))
+loadExampleFiles()
