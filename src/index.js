@@ -26,9 +26,10 @@ function showTemplateFile(file) {
 
 const loadExampleFiles = () => {
     const exampleSelector = document.getElementById("examples")
+    const basepath = process.env.BASEPATH
 
     // Fetch the file list
-    fetch('/examples/filelist.json')
+    fetch(`${basepath}/examples/filelist.json`)
         .then((response) => response.json())
         .then((fileList) => {
             fileList.forEach((fileName) => {
@@ -40,7 +41,7 @@ const loadExampleFiles = () => {
 
             exampleSelector.addEventListener("change", (_) => {
                 const selectedFile = exampleSelector.value
-                const filePath = "/examples/" + selectedFile
+                const filePath = `${basepath}/examples/` + selectedFile
                 fetch(filePath)
                     .then((response) => response.text())
                     .then((fileContent) => {
