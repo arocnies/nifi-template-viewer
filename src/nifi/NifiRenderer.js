@@ -210,7 +210,7 @@ export const SIZING_NO_ENCODING = {
     inputPort: {width: 168, height: 56},
     outputPort: {width: 168, height: 56},
     funnel: {width: 32, height: 32},
-    bend: {width: 7, height: 7},
+    bend: {width: 10, height: 10},
     processGroup: {width: 244, height: 128},
     label: {width: 244, height: 128},
     queue: {width: 155, height: 29},
